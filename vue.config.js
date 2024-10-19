@@ -6,15 +6,15 @@ module.exports = defineConfig({
   devServer: {
     proxy: {
       '/schedule-planner': {
-        target: 'https://localhost:8443',
+        target: process.env.BACKEND_BASE_URL,
         changeOrigin: true,
         secure: false
       }
     },
     https: {
-      key: fs.readFileSync('./certs/server.key'),
-      cert: fs.readFileSync('./certs/server.crt')
+      key: fs.readFileSync(process.env.CERT_URL+'/server.key'),
+      cert: fs.readFileSync(process.env.CERT_URL+'/server.crt')
     },
-    port: 8080
+    port: 80
   }
 });

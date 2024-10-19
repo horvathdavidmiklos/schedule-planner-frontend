@@ -37,7 +37,6 @@
       <p>Már van fiókod? <router-link to="/login">Jelentkezz be!</router-link></p>
       <button @click="goBack" class="back-btn">Vissza a főoldalra</button>
     </div>
-    
   </div>
 </template>
 
