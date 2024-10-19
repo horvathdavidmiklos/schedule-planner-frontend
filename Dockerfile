@@ -13,9 +13,6 @@ RUN npm install
 # 5. lépés: Az alkalmazás forráskódjának másolása
 COPY . .
 
-# Másold be a tanúsítványokat a konténerbe
-COPY ./certs /app/certs
-
 # 6. lépés: A port 80-ra irányítjuk a konténert
 EXPOSE 80
 
