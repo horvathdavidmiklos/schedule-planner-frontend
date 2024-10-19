@@ -6,7 +6,7 @@ module.exports = defineConfig({
   devServer: {
     proxy: {
       '/schedule-planner': {
-        target: 'https://horvathdavidmiklos.hu:8080',
+        target: 'https://localhost:8443',
         changeOrigin: true,
         secure: false
       }
