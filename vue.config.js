@@ -1,8 +1,9 @@
 const fs = require('fs');
-const { defineConfig } = require('@vue/cli-service');
 
-module.exports = defineConfig({
-  transpileDependencies: true,
+module.exports = {
+  transpileDependencies: [
+    // Ide írd a csomagokat, amiket transpile-ni akarsz. Például: 'vuetify'
+  ],
   devServer: {
     proxy: {
       '/schedule-planner': {
@@ -12,9 +13,9 @@ module.exports = defineConfig({
       }
     },
     https: {
-      key: fs.readFileSync(process.env.CERT_URL+'/server.key'),
-      cert: fs.readFileSync(process.env.CERT_URL+'/server.crt')
+      key: fs.readFileSync(process.env.CERT_URL + '/server.key'),
+      cert: fs.readFileSync(process.env.CERT_URL + '/server.crt')
     },
     port: 80
   }
-});
+};

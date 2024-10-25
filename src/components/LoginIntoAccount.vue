@@ -20,7 +20,7 @@
     </form>
 
     <!-- Google Sign-In -->
-    <button @click="googleLogin" class="google-login-btn">
+    <button @click="googleLoginHandler" class="google-login-btn">
       Bejelentkezés Google fiókkal
     </button>
 
@@ -73,7 +73,7 @@ export default {
     async login() {
       try {
         const response = await axios.post('/schedule-planner/account/login', this.form);
-        console.log(response)
+        console.log(response);
         this.successMessage = 'Sikeres bejelentkezés.';
         this.errorMessage = '';
 
@@ -89,30 +89,23 @@ export default {
         this.errorMessage = 'Hiba történt a bejelentkezés során.';
       }
     },
-    googleLogin() {
+    async googleLoginHandler() {
       const { signIn } = useGoogleLogin({
-        clientId: 'YOUR_GOOGLE_CLIENT_ID',  // Google kliens azonosító
+        clientId: 'YOUR_GOOGLE_CLIENT_ID', // Google kliens azonosító
         scope: 'profile email',
         prompt: 'consent'
       });
 
-      signIn()
-        .then(googleUser => {
-          const token = googleUser.getAuthResponse().id_token;
-          axios.post('/schedule-planner/account/google-login', { token })
-            .then(() => {
-              this.successMessage = 'Google bejelentkezés sikeres!';
-            })
-            .catch(() => {
-              this.errorMessage = 'Hiba történt a Google bejelentkezés során.';
-            });
-        })
-        .catch(() => {
-          this.errorMessage = 'Google bejelentkezés sikertelen.';
-        });
+      try {
+        const googleUser = await signIn();
+        const token = googleUser.getAuthResponse().id_token;
+
+        await axios.post('/schedule-planner/account/google-auth', { token });
+        this.successMessage = 'Google bejelentkezés sikeres!';
+      } catch (error) {
+        this.errorMessage = 'Hiba történt a Google bejelentkezés során.';
+      }
     }
   }
 };
 </script>
-
-

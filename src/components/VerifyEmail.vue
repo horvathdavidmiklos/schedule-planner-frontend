@@ -19,7 +19,7 @@
   import axios from 'axios';
 
   export default {
-  props: ['token', 'username'], // A route paraméterek prop-ként történő fogadása
+  props: ['token', 'username','purpose'], // A route paraméterek prop-ként történő fogadása
   data() {
     return {
       successMessage: '',
@@ -28,8 +28,8 @@
   },
   async created() {
     try {
-      console.log(this.token,this.username);
-      const response = await axios.get(`/schedule-planner/account/verify-email?token=${this.token}&username=${this.username}`);
+      console.log(this.token,this.username,this.purpose);
+      const response = await axios.get(`/schedule-planner/account/verify-email?token=${this.token}&username=${this.username}&purpose=${this.purpose}`);
       this.errorMessage = '';
       if (response.status === 200) {
         this.successMessage = 'Sikeres email ellenőrzés!';

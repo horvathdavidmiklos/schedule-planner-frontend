@@ -17,6 +17,10 @@
         <input id="email" type="email" v-model="form.email" required class="input" />
       </div>
       <div class="form-group">
+        <label for="nickname">Keresztnév:</label>
+        <input id="nickname" type="nickname" v-model="form.nickname" required class="input" />
+      </div>
+      <div class="form-group">
         <label for="password">Jelszó:</label>
         <input id="password" type="password" v-model="form.password" required class="input" />
       </div>
@@ -32,12 +36,15 @@
       <p>{{ successMessage }}</p>
     </div>
 
-    <!-- navigation links -->
     <div class="navigation-links">
-      <p>Már van fiókod? <router-link to="/login">Jelentkezz be!</router-link></p>
-      <button @click="goBack" class="back-btn">Vissza a főoldalra</button>
+      <p>Vissza a <router-link to="/home">főoldalra</router-link></p>
     </div>
   </div>
+  <!-- navigation links -->
+  <div class="navigation-links">
+      <p>Már van fiókod? <router-link to="/login">Jelentkezz be!</router-link></p>
+  </div>
+
 </template>
 
 <script>
@@ -50,6 +57,7 @@ export default {
       form: {
         username: '',
         email: '',
+        nickname: '',
         password: '',
         passwordConfirmation: ''
       },

@@ -2,7 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router';
 import RegistrationNewAccount from '../components/RegistrationNewAccount.vue';
 import LoginIntoAccount from '../components/LoginIntoAccount.vue';
 import VerifyEmail from '../components/VerifyEmail.vue';
-import MainSite from '../components/MainSite.vue';
+import Home from '../components/Home.vue';
+import GoogleAuthTest from '../components/GoogleAuthTest.vue';
 
 const routes = [
   {
@@ -16,15 +17,22 @@ const routes = [
     component: LoginIntoAccount
   },
   {
-    path: '/schedule-planner',
-    name: 'MainSite',
-    component: MainSite
+    path: '/home',
+    name: 'Home',
+    component: Home
   },
   {
-    path: '/verify-email/:token/:username',
+    path: '/verify-email/:token(.*)/:username(.*)/:purpose',
     name: 'verify-email',
     props: true,
     component: VerifyEmail,
+  },
+
+  {
+    path: '/google-auth',
+    name: 'google-auth',
+    props: true,
+    component: GoogleAuthTest,
   },
 ];
 

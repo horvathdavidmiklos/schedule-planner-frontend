@@ -24,6 +24,12 @@
   margin-bottom: 15px;
 }
 
+.form-checkbox {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+}
+
 label {
   display: block;
   font-weight: bold;
@@ -133,3 +139,43 @@ label {
 .back-btn:hover {
   background-color: #218838;
 }
+
+
+  .main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+  }
+  
+  .link-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .main-link {
+    background-color: #007BFF;
+    color: white;
+    text-decoration: none;
+    padding: 15px 30px;
+    border-radius: 5px;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .main-link:hover {
+    background-color: #0056b3;
+  }
+
+  .google-login-btn {
+    background-color: #4285F4;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
