@@ -19,15 +19,32 @@
       <button type="submit" class="submit-btn">Bejelentkezés</button>
     </form>
 
+    <!-- Google Sign-In -->
+    <button @click="googleLogin" class="google-login-btn">
+      Bejelentkezés Google fiókkal
+    </button>
+
     <!-- login success message -->
     <div v-if="successMessage" class="feedback-message success">
       <p>{{ successMessage }}</p>
     </div>
+
+    <div class="form-checkbox">
+      <input type="checkbox" id="rememberMe" v-model="rememberMe" />
+      <label for="rememberMe">Emlékezz rám</label>
+    </div>
+
+    <div class="navigation-links">
+      <p>Még nincs fiókod? <router-link to="/registration">Regisztrálj</router-link></p>
+    </div>
+  </div>
+  <div class="navigation-links">
+    <p>Vissza a <router-link to="/home">főoldalra</router-link></p>
   </div>
 </template>
 
 <script>
-import '@/assets/basic.css';
+import { useGoogleLogin } from 'vue3-google-oauth2';
 import axios from 'axios';
 
 export default {
@@ -38,32 +55,64 @@ export default {
         password: ''
       },
       errorMessage: '',
-      successMessage: ''
+      successMessage: '',
+      rememberMe: false
     };
+  },
+  mounted() {
+    // Bejelentkezési adatok betöltése a LocalStorage-ból
+    const savedId = localStorage.getItem('username');
+    const savedPassword = localStorage.getItem('password');
+    if (savedId && savedPassword) {
+      this.form.id = savedId;
+      this.form.password = savedPassword;
+      this.rememberMe = true;
+    }
   },
   methods: {
     async login() {
-      console.log(this.form); // Log to see the form data
       try {
         const response = await axios.post('/schedule-planner/account/login', this.form);
-        console.log(response.data);
+        console.log(response)
         this.successMessage = 'Sikeres bejelentkezés.';
         this.errorMessage = '';
-        // További lépéseket itt adhatsz hozzá, például a felhasználó átirányítása
+
+        if (this.rememberMe) {
+          localStorage.setItem('username', this.form.id);
+          localStorage.setItem('password', this.form.password);
+        } else {
+          localStorage.removeItem('username');
+          localStorage.removeItem('password');
+        }
       } catch (error) {
         this.successMessage = '';
-        switch (error.response.data) {
-          case 'USERNAME_OR_PASSWORD_NOT_VALID':
-            this.errorMessage = 'Hibás felhasználónév vagy jelszó.';
-            break;
-          case 'ACCOUNT_NOT_VERIFIED':
-            this.errorMessage = 'A fiók még nincs hitelesítve.';
-            break;
-          default:
-            this.errorMessage = 'Hiba történt a bejelentkezés során.';
-        }
+        this.errorMessage = 'Hiba történt a bejelentkezés során.';
       }
+    },
+    googleLogin() {
+      const { signIn } = useGoogleLogin({
+        clientId: 'YOUR_GOOGLE_CLIENT_ID',  // Google kliens azonosító
+        scope: 'profile email',
+        prompt: 'consent'
+      });
+
+      signIn()
+        .then(googleUser => {
+          const token = googleUser.getAuthResponse().id_token;
+          axios.post('/schedule-planner/account/google-login', { token })
+            .then(() => {
+              this.successMessage = 'Google bejelentkezés sikeres!';
+            })
+            .catch(() => {
+              this.errorMessage = 'Hiba történt a Google bejelentkezés során.';
+            });
+        })
+        .catch(() => {
+          this.errorMessage = 'Google bejelentkezés sikertelen.';
+        });
     }
   }
 };
 </script>
+
+
