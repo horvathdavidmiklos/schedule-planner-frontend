@@ -25,10 +25,25 @@
 }
 
 .form-checkbox {
-  margin-top: 10px;
   display: flex;
   align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+  margin-left: 10px;
 }
+
+.form-checkbox input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.form-checkbox label {
+  font-size: 1rem;
+  color: #333;
+  cursor: pointer;
+}
+
 
 label {
   display: block;
@@ -170,12 +185,6 @@ label {
     background-color: #0056b3;
   }
 
-  .google-login-btn {
-    background-color: #4285F4;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-top: 10px;
+  .space{
+    margin-top: 20px;
   }

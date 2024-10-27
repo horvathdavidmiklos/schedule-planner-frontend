@@ -69,7 +69,7 @@ export default {
     async register() {
       try {
         await axios.post('/schedule-planner/account/create', this.form);
-        this.successMessage = 'A fiók sikeresen létrejött.';
+        this.successMessage = 'Sikeres regisztráció, hitelesítsd az e-mailcímedet.';
         this.errorMessage = '';
       } catch (error) {
         this.successMessage = '';

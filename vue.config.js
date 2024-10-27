@@ -1,4 +1,5 @@
 const fs = require('fs');
+const webpack = require('webpack');
 
 module.exports = {
   transpileDependencies: [
@@ -17,5 +18,12 @@ module.exports = {
       cert: fs.readFileSync(process.env.CERT_URL + '/server.crt')
     },
     port: 80
+  },
+  configureWebpack: {
+    plugins: [
+      new webpack.DefinePlugin({
+        __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: JSON.stringify(true),
+      }),
+    ],
   }
 };
